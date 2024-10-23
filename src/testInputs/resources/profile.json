@@ -21,7 +21,8 @@
           "disable_constant_fields": "false",
           "disable_records": "false",
           "disable_codecs": "false",
-          "simple_type_field_names_path": "./simple_type_field_names.json5"
+          "simple_type_field_names_path": "./simple_type_field_names.json5",
+          "entity_rendering": "./entity_rendering.json5"
         }
       }
     ]

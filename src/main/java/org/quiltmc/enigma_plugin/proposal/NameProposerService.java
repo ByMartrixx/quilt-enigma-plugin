@@ -25,6 +25,7 @@ import org.quiltmc.enigma.api.translation.representation.entry.Entry;
 import org.quiltmc.enigma_plugin.Arguments;
 import org.quiltmc.enigma_plugin.QuiltEnigmaPlugin;
 import org.quiltmc.enigma_plugin.index.JarIndexer;
+import org.quiltmc.enigma_plugin.index.entity_rendering.EntityModelPartNamesIndex;
 import org.quiltmc.enigma_plugin.index.simple_type_single.SimpleTypeSingleIndex;
 
 import java.util.ArrayList;
@@ -47,6 +48,10 @@ public class NameProposerService implements NameProposalService {
 
 		if (indexer.getIndex(SimpleTypeSingleIndex.class).isEnabled()) {
 			this.nameProposers.add(new SimpleTypeFieldNameProposer(indexer));
+		}
+
+		if (indexer.getIndex(EntityModelPartNamesIndex.class).isEnabled()) {
+			this.nameProposers.add(new EntityModelPartNamesProposer(indexer));
 		}
 
 		this.addIfEnabled(context, indexer, Arguments.DISABLE_CONSTRUCTOR_PARAMS, ConstructorParamsNameProposer::new);

@@ -113,8 +113,8 @@ public class NameProposalTest {
 
 	@Test
 	public void testConstantFieldNames() {
-		var classEntry = new ClassEntry("com/a/a/c");
-		var desc = new TypeDescriptor("Lcom/a/a/f;");
+		var classEntry = new ClassEntry("com/a/b/c");
+		var desc = new TypeDescriptor("Lcom/a/b/f;");
 
 		assertProposal("FOO", new FieldEntry(classEntry, "a", desc));
 		assertProposal("BAR_FOO", new FieldEntry(classEntry, "b", desc));
@@ -126,7 +126,7 @@ public class NameProposalTest {
 		assertProposal("TWO", new FieldEntry(classEntry, "h", desc));
 		assertProposal("THREE", new FieldEntry(classEntry, "i", desc));
 
-		var class2Entry = new ClassEntry("com/a/a/a");
+		var class2Entry = new ClassEntry("com/a/b/a");
 
 		assertProposal("FOO", new FieldEntry(class2Entry, "a", desc));
 		assertProposal("BAR_FOO", new FieldEntry(class2Entry, "b", desc));
@@ -134,21 +134,21 @@ public class NameProposalTest {
 		assertProposal("NORTH", new FieldEntry(class2Entry, "d", desc));
 		assertProposal("EAST", new FieldEntry(class2Entry, "e", desc));
 
-		var class3Entry = new ClassEntry("com/a/a/b");
+		var class3Entry = new ClassEntry("com/a/b/b");
 
 		assertProposal("FOO", new FieldEntry(class3Entry, "a", desc));
 		assertProposal("BAR_FOO", new FieldEntry(class3Entry, "b", desc));
 
-		var enumEntry = new ClassEntry("com/a/a/e");
-		var enumDesc = new TypeDescriptor("Lcom/a/a/e;");
+		var enumEntry = new ClassEntry("com/a/b/e");
+		var enumDesc = new TypeDescriptor("Lcom/a/b/e;");
 
 		assertProposal("NORTH", new FieldEntry(enumEntry, "a", enumDesc));
 		assertProposal("EAST", new FieldEntry(enumEntry, "b", enumDesc));
 		assertProposal("WEST", new FieldEntry(enumEntry, "c", enumDesc));
 		assertProposal("SOUTH", new FieldEntry(enumEntry, "d", enumDesc));
 
-		var enum2Entry = new ClassEntry("com/a/a/d");
-		var enum2Desc = new TypeDescriptor("Lcom/a/a/d;");
+		var enum2Entry = new ClassEntry("com/a/b/d");
+		var enum2Desc = new TypeDescriptor("Lcom/a/b/d;");
 
 		assertProposal("CONSTANT", new FieldEntry(enum2Entry, "a", enum2Desc));
 		assertProposal("INT", new FieldEntry(enum2Entry, "b", enum2Desc));
@@ -202,90 +202,91 @@ public class NameProposalTest {
 		assertDynamicProposal("name", localVar(method, 1));
 	}
 
+
 	@Test
 	public void testSimpleTypeSingleNames() {
 		var classEntry = new ClassEntry("com/a/e");
 		var fieldsClassEntry = new ClassEntry(classEntry, "a");
 
 		var owner = new ClassEntry(fieldsClassEntry, "a");
-		assertNotProposed(field(owner, "a", "Lcom/a/b/g;"));
-		assertNotProposed(field(owner, "b", "Lcom/a/b/g;"));
+		assertNotProposed(field(owner, "a", "Lcom/a/c/g;"));
+		assertNotProposed(field(owner, "b", "Lcom/a/c/g;"));
 
 		owner = new ClassEntry(fieldsClassEntry, "b");
-		assertProposal("POS", field(owner, "a", "Lcom/a/b/b;"));
-		assertProposal("position", field(owner, "b", "Lcom/a/b/c;"));
-		assertProposal("randomPosition", field(owner, "c", "Lcom/a/b/d;"));
-		assertProposal("STATIC_STATE_A", field(owner, "d", "Lcom/a/b/e;"));
-		assertProposal("STATIC_STATE_B", field(owner, "e", "Lcom/a/b/f;"));
-		assertProposal("VALUE_A", field(owner, "f", "Lcom/a/b/g;"));
-		assertProposal("VALUE_B", field(owner, "g", "Lcom/a/b/h;"));
-		assertProposal("valueC", field(owner, "h", "Lcom/a/b/i;"));
+		assertProposal("POS", field(owner, "a", "Lcom/a/c/b;"));
+		assertProposal("position", field(owner, "b", "Lcom/a/c/c;"));
+		assertProposal("randomPosition", field(owner, "c", "Lcom/a/c/d;"));
+		assertProposal("STATIC_STATE_A", field(owner, "d", "Lcom/a/c/e;"));
+		assertProposal("STATIC_STATE_B", field(owner, "e", "Lcom/a/c/f;"));
+		assertProposal("VALUE_A", field(owner, "f", "Lcom/a/c/g;"));
+		assertProposal("VALUE_B", field(owner, "g", "Lcom/a/c/h;"));
+		assertProposal("valueC", field(owner, "h", "Lcom/a/c/i;"));
 
 		owner = new ClassEntry(fieldsClassEntry, "c");
-		assertProposal("valueD", field(owner, "a", "Lcom/a/b/k;"));
-		assertNotProposed(field(owner, "b", "Lcom/a/b/m;"));
+		assertProposal("valueD", field(owner, "a", "Lcom/a/c/k;"));
+		assertNotProposed(field(owner, "b", "Lcom/a/c/m;"));
 
 		owner = new ClassEntry(fieldsClassEntry, "d");
-		assertProposal("CONFIG", field(owner, "a", "Lcom/a/b/a;"));
-		assertProposal("STATIC_STATE", field(owner, "b", "Lcom/a/b/e;"));
-		assertProposal("value", field(owner, "c", "Lcom/a/b/i;"));
+		assertProposal("CONFIG", field(owner, "a", "Lcom/a/c/a;"));
+		assertProposal("STATIC_STATE", field(owner, "b", "Lcom/a/c/e;"));
+		assertProposal("value", field(owner, "c", "Lcom/a/c/i;"));
 
 		owner = new ClassEntry(classEntry, "b");
-		var parent = method(owner, "a", "(Lcom/a/b/a;)V");
+		var parent = method(owner, "a", "(Lcom/a/c/a;)V");
 		assertProposal("config", localVar(parent, 0));
 
-		parent = method(owner, "a", "(Lcom/a/b/b;)V");
+		parent = method(owner, "a", "(Lcom/a/c/b;)V");
 		assertProposal("pos", localVar(parent, 1));
 
-		parent = method(owner, "a", "(Lcom/a/b/b;Lcom/a/b/c;)V");
-		assertProposal("pos", localVar(parent, 1));
-		assertProposal("position", localVar(parent, 2));
-
-		parent = method(owner, "a", "(Lcom/a/b/b;Lcom/a/b/d;)V");
+		parent = method(owner, "a", "(Lcom/a/c/b;Lcom/a/c/c;)V");
 		assertProposal("pos", localVar(parent, 1));
 		assertProposal("position", localVar(parent, 2));
 
-		parent = method(owner, "a", "(Lcom/a/b/b;Lcom/a/b/c;Lcom/a/b/d;)V");
+		parent = method(owner, "a", "(Lcom/a/c/b;Lcom/a/c/d;)V");
+		assertProposal("pos", localVar(parent, 1));
+		assertProposal("position", localVar(parent, 2));
+
+		parent = method(owner, "a", "(Lcom/a/c/b;Lcom/a/c/c;Lcom/a/c/d;)V");
 		assertProposal("pos", localVar(parent, 1));
 		assertProposal("position", localVar(parent, 2));
 		assertProposal("randomPosition", localVar(parent, 3));
 
-		parent = method(owner, "a", "(Lcom/a/b/e;)V");
+		parent = method(owner, "a", "(Lcom/a/c/e;)V");
 		assertProposal("state", localVar(parent, 1));
 
-		parent = method(owner, "a", "(Lcom/a/b/e;Lcom/a/b/f;)V");
+		parent = method(owner, "a", "(Lcom/a/c/e;Lcom/a/c/f;)V");
 		assertProposal("stateA", localVar(parent, 0));
 		assertProposal("stateB", localVar(parent, 1));
 
-		parent = method(owner, "a", "(Lcom/a/b/g;Lcom/a/b/h;Lcom/a/b/i;)V");
+		parent = method(owner, "a", "(Lcom/a/c/g;Lcom/a/c/h;Lcom/a/c/i;)V");
 		assertProposal("valueA", localVar(parent, 0));
 		assertProposal("valueB", localVar(parent, 1));
 		assertProposal("valueC", localVar(parent, 2));
 
-		parent = method(owner, "a", "(Lcom/a/b/g;Lcom/a/b/g;)V");
+		parent = method(owner, "a", "(Lcom/a/c/g;Lcom/a/c/g;)V");
 		assertNotProposed(localVar(parent, 0));
 		assertNotProposed(localVar(parent, 1));
 
 		// Check that both the parent and child class have names
-		parent = method(owner, "a", "(Lcom/a/b/j;)V");
+		parent = method(owner, "a", "(Lcom/a/c/j;)V");
 		assertProposal("valueD", localVar(parent, 0));
 
-		parent = method(owner, "a", "(Lcom/a/b/k;)V");
+		parent = method(owner, "a", "(Lcom/a/c/k;)V");
 		assertProposal("valueD", localVar(parent, 0));
 
 		// Check that just the parent class has a name
-		parent = method(owner, "a", "(Lcom/a/b/l;)V");
+		parent = method(owner, "a", "(Lcom/a/c/l;)V");
 		assertProposal("valueE", localVar(parent, 0));
 
-		parent = method(owner, "a", "(Lcom/a/b/m;)V");
+		parent = method(owner, "a", "(Lcom/a/c/m;)V");
 		assertNotProposed(localVar(parent, 0));
 
 		// Check that indexing order doesn't affect inheritance tree
-		owner = new ClassEntry("com/a/b/j");
-		parent = method(owner, "a", "(Lcom/a/b/j;)V");
+		owner = new ClassEntry("com/a/c/j");
+		parent = method(owner, "a", "(Lcom/a/c/j;)V");
 		assertProposal("valueD", localVar(parent, 0));
 
-		parent = method(owner, "a", "(Lcom/a/b/k;)V");
+		parent = method(owner, "a", "(Lcom/a/c/k;)V");
 		assertProposal("valueD", localVar(parent, 0));
 	}
 
@@ -382,11 +383,21 @@ public class NameProposalTest {
 		assertDynamicProposal("bound", localVar(method(classEntry, "b", "(I)V"), 1));
 
 		// Names shouldn't be proposed for synthetic parameters (like Enum constructor name and ordinal)
-		classEntry = new ClassEntry("com/a/a/e");
+		classEntry = new ClassEntry("com/a/b/e");
 		var method = method(classEntry, "<init>", "(Ljava/lang/String;IZ)V");
 
 		assertNotProposed(localVar(method, 1));
 		assertNotProposed(localVar(method, 2));
+	}
+
+	@Test
+	public void testEntityRendering() {
+		var classEntry = new ClassEntry("com/a/a/a");
+
+		assertProposal("HEAD", field(classEntry, "a", "Ljava/lang/String;"));
+		assertProposal("EARS", field(classEntry, "b", "Ljava/lang/String;"));
+		assertNotProposed(field(classEntry, "c", "Ljava/lang/String;"));
+		assertNotProposed(field(classEntry, "d", "Ljava/lang/String;"));
 	}
 
 	private static FieldEntry field(ClassEntry parent, String name, String desc) {

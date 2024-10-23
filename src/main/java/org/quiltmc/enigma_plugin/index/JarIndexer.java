@@ -24,6 +24,7 @@ import org.quiltmc.enigma.api.service.EnigmaServiceContext;
 import org.quiltmc.enigma.api.service.JarIndexerService;
 import org.quiltmc.enigma_plugin.QuiltEnigmaPlugin;
 import org.quiltmc.enigma_plugin.index.constant_fields.ConstantFieldIndex;
+import org.quiltmc.enigma_plugin.index.entity_rendering.EntityModelPartNamesIndex;
 import org.quiltmc.enigma_plugin.index.simple_type_single.SimpleTypeSingleIndex;
 
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class JarIndexer implements JarIndexerService, Opcodes {
 		this.addIndex(new SimpleTypeSingleIndex());
 		this.addIndex(new DelegateParametersIndex());
 		this.addIndex(new LoggerIndex());
+		this.addIndex(new EntityModelPartNamesIndex());
 	}
 
 	private <T extends Index> void addIndex(T index) {
